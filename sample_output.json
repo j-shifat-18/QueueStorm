@@ -1,0 +1,108 @@
+{
+  "_meta": {
+    "description": "Sample outputs generated from SUST_Preli_Sample_Cases.json cases",
+    "endpoint": "POST /analyze-ticket",
+    "generated_by": "QueueStorm Investigator v1.0.0"
+  },
+  "sample_responses": [
+    {
+      "input": {
+        "ticket_id": "TKT-001",
+        "complaint": "I sent 5000 taka to a wrong number around 2pm today. The number was supposed to be 01712345678 but I think I typed it wrong. The person isn't responding to my call. Please help me get my money back.",
+        "language": "en",
+        "channel": "in_app_chat",
+        "user_type": "customer",
+        "campaign_context": "boishakh_bonanza_day_1",
+        "transaction_history": [
+          {
+            "transaction_id": "TXN-9101",
+            "timestamp": "2026-04-14T14:08:22Z",
+            "type": "transfer",
+            "amount": 5000,
+            "counterparty": "+8801719876543",
+            "status": "completed"
+          }
+        ]
+      },
+      "output": {
+        "ticket_id": "TKT-001",
+        "relevant_transaction_id": "TXN-9101",
+        "evidence_verdict": "consistent",
+        "case_type": "wrong_transfer",
+        "severity": "high",
+        "department": "dispute_resolution",
+        "agent_summary": "Customer reports sending 5000 BDT via TXN-9101 to +8801719876543, which they believe was the wrong recipient. Recipient is unresponsive.",
+        "recommended_next_action": "Verify TXN-9101 details with the customer and initiate the wrong-transfer dispute workflow per policy.",
+        "customer_reply": "We have noted your concern about transaction TXN-9101. Our dispute team will review the case and contact you through official support channels. Please do not share your PIN or OTP with anyone.",
+        "human_review_required": true,
+        "confidence": 0.92,
+        "reason_codes": ["wrong_transfer", "transaction_match", "dispute_initiated"]
+      }
+    },
+    {
+      "input": {
+        "ticket_id": "TKT-005",
+        "complaint": "Someone called me saying they are from bKash and asked for my OTP. They said my account will be blocked if I don't share it. Is this real? I haven't shared anything yet.",
+        "language": "en",
+        "channel": "call_center",
+        "user_type": "customer",
+        "transaction_history": []
+      },
+      "output": {
+        "ticket_id": "TKT-005",
+        "relevant_transaction_id": null,
+        "evidence_verdict": "insufficient_data",
+        "case_type": "phishing_or_social_engineering",
+        "severity": "critical",
+        "department": "fraud_risk",
+        "agent_summary": "Customer reports an unsolicited call claiming to be from the company and requesting OTP. Customer has not yet shared credentials. Likely social engineering attempt.",
+        "recommended_next_action": "Escalate to fraud_risk team immediately. Confirm to customer that the company never asks for OTP. Log the reported number for fraud pattern analysis.",
+        "customer_reply": "Thank you for reaching out before sharing any information. We never ask for your PIN, OTP, or password under any circumstances. Please do not share these with anyone, even if they claim to be from us. Our fraud team has been notified of this incident.",
+        "human_review_required": true,
+        "confidence": 0.97,
+        "reason_codes": ["phishing", "credential_protection", "critical_escalation"]
+      }
+    },
+    {
+      "input": {
+        "ticket_id": "TKT-010",
+        "complaint": "I paid my electricity bill 850 taka but it deducted twice from my account. Please check, I only paid once.",
+        "language": "en",
+        "channel": "in_app_chat",
+        "user_type": "customer",
+        "transaction_history": [
+          {
+            "transaction_id": "TXN-10001",
+            "timestamp": "2026-04-14T08:15:30Z",
+            "type": "payment",
+            "amount": 850,
+            "counterparty": "BILLER-DESCO",
+            "status": "completed"
+          },
+          {
+            "transaction_id": "TXN-10002",
+            "timestamp": "2026-04-14T08:15:42Z",
+            "type": "payment",
+            "amount": 850,
+            "counterparty": "BILLER-DESCO",
+            "status": "completed"
+          }
+        ]
+      },
+      "output": {
+        "ticket_id": "TKT-010",
+        "relevant_transaction_id": "TXN-10002",
+        "evidence_verdict": "consistent",
+        "case_type": "duplicate_payment",
+        "severity": "high",
+        "department": "payments_ops",
+        "agent_summary": "Customer reports duplicate electricity bill payment. Two identical 850 BDT payments to BILLER-DESCO completed 12 seconds apart (TXN-10001 and TXN-10002). The second is likely the duplicate.",
+        "recommended_next_action": "Verify the duplicate with payments_ops. If the biller confirms only one payment was received, initiate review for potential reversal of TXN-10002.",
+        "customer_reply": "We have noted the possible duplicate payment for transaction TXN-10002. Our payments team will verify with the biller and any eligible amount will be returned through official channels. Please do not share your PIN or OTP with anyone.",
+        "human_review_required": true,
+        "confidence": 0.95,
+        "reason_codes": ["duplicate_payment", "near_identical_transactions", "biller_verification_required"]
+      }
+    }
+  ]
+}
