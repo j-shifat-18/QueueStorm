@@ -38,3 +38,4 @@ Thumbs.db
 
 # Alembic (keep migrations, ignore runtime artifacts)
 alembic/__pycache__/
+.vercel

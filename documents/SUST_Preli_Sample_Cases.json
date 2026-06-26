@@ -99,7 +99,8 @@
             "status": "completed"
           }
         ]
-      },
+      }
+      ,
       "expected_output": {
         "ticket_id": "TKT-001",
         "relevant_transaction_id": "TXN-9101",

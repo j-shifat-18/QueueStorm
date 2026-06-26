@@ -1,8 +1,3 @@
-"""
-Quick smoke tests — can be run without a live DB or Gemini key.
-Tests cover schema validation, safety guardrails, and evidence engine.
-"""
-
 import pytest
 import json
 from fastapi.testclient import TestClient
